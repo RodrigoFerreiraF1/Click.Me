@@ -14,6 +14,7 @@ public class Shop : MonoBehaviour
     public Text p1,p2,p3,p4,p5;
     public Text limit;
     public Text y1,y2,y3,y4,y5,y6,y7,y8,y9,y10;
+    public Text l1t,l2t,l3t,l4t,l5t;
     public static int buymultiplier=1 ;
     public double b1,b2,b3,b4,b5;
     public Image i1,i2,i3,i4,i5;
@@ -28,6 +29,7 @@ public class Shop : MonoBehaviour
    // public string a1s=a1.ToString() ,a2s=a2.ToString();
     void Start()
     {
+        
         //Xp.level=1;
         price1=250;
         price2=100;
@@ -52,20 +54,40 @@ public class Shop : MonoBehaviour
             y9.text="+"+400;
             y10.text="+"+400;
         wip.enabled=false;
-        l1=Xp.level;
-        l2=Xp.level;
-        l3=Xp.level;
-        l4=Xp.level;
-        l5=Xp.level;
+        //load data
+            l1=PlayerPrefs.GetInt("l1",0);
+             l2=PlayerPrefs.GetInt("l2",0);
+              l3=PlayerPrefs.GetInt("l3",0);
+               l4=PlayerPrefs.GetInt("l4",0);
+                l5=PlayerPrefs.GetInt("l5",0);
+bt1.enabled=false;
+bt2.enabled=false;
+bt3.enabled=false;
+bt4.enabled=false;
+bt5.enabled=false;
             }
     void Update()
     {
-        limit.text="Limit:"+Xp.level;
-         b1 =MainPotatos.coin_double/price1;
-         b2 =MainPotatos.coin_double/price2;
-         b3 =MainPotatos.coin_double/price3;
-         b4 =MainPotatos.coin_double/price4;
-         b5 =MainPotatos.coin_double/price5;
+
+
+        if(Xp.level==0){
+            l1=0;
+            l2=0;
+            l3=0;
+            l4=0;
+            l5=0;
+        }
+//load data
+
+        PlayerPrefs.SetInt("l1",l1);
+          PlayerPrefs.SetInt("l2",l2);
+            PlayerPrefs.SetInt("l3",l3);
+              PlayerPrefs.SetInt("l4",l4);
+                PlayerPrefs.SetInt("l5",l5);
+
+
+        limit.text="Limit:"+(Xp.level-1);
+
          if(Xp.level >=10){
             i1.enabled=false;
             }else{
@@ -91,7 +113,43 @@ public class Shop : MonoBehaviour
             }else{
              i5.enabled=true;      
             }
-    }
+
+            
+
+ //stats ups
+    l1t.text="Upgrade1:"+l1;
+    l2t.text="Upgrade2:"+l2;
+    l3t.text="Upgrade3:"+l3;
+    l4t.text="Upgrade4:"+l4;
+    l5t.text="Upgrade5:"+l5;
+
+if(Xp.level-l1>0 && Xp.level-buymultiplier>l1){
+        bt1.enabled=true;
+         }else{
+        bt1.enabled=false;
+     }
+       if(Xp.level-l2>0 && Xp.level-buymultiplier>l2){
+        bt2.enabled=true;
+         }else{
+        bt2.enabled=false;
+     }
+   if(Xp.level-l3>0 && Xp.level-buymultiplier>l3){
+        bt3.enabled=true;
+         }else{
+        bt3.enabled=false;
+     }
+     if(Xp.level-l4>0 && Xp.level-buymultiplier>l4){
+        bt4.enabled=true;
+         }else{
+        bt4.enabled=false;
+     }
+     if(Xp.level-l5>0 && Xp.level-buymultiplier>l5){
+        bt5.enabled=true;
+         }else{
+        bt5.enabled=false;
+     }
+
+        }
         public void change(int oi)
     {
        
@@ -173,34 +231,7 @@ public class Shop : MonoBehaviour
         
 
         }
-        if(oi==4)
-        {
-            
-            t1.text = ""+b1.ToString("N0");
-            t2.text = ""+b2.ToString("N0");
-            t3.text = ""+b3.ToString("N0");
-            t4.text = ""+b4.ToString("N0");
-            t5.text = ""+b5.ToString("N0");
-            
-            //refazer
-
-            p1.text=""+b1*250;
-            p2.text =""+b2*100;
-            p3.text =""+b3*1050;
-            p4.text =""+b4*3650;
-            p5.text =""+b5*145000;
-             y1.text="+"+0*b1;
-            y2.text=""+1*b1;
-            y3.text=""+1*b2;
-            y4.text=""+0*b2;
-            y5.text=""+5*b3;
-            y6.text=""+5*b3;
-            y7.text=""+70*b4;
-            y8.text=""+90*b4;
-            y9.text=""+400*b5;
-            y10.text=""+400*b5;
-            
-        }
+    
     }
   
     public void LALALA(int num)
@@ -210,69 +241,55 @@ public class Shop : MonoBehaviour
         {
             MainPotatos.podevender += buymultiplier;
             MainPotatos.coin_double -= 250*buymultiplier;
-           l1+=1;
-           if(l1==Xp.level){
-                bt1.enabled=false;
-           }else{
-                bt1.enabled=true;
-           }
-           
-
-            
-        
+           l1+=buymultiplier;
+    
         }
         else
         {
             
         }
+
         if (num == 2 && MainPotatos.coin_double >= 100 * buymultiplier && Xp.level >= 20 )
         {
             MainPotatos.multiplier += 1* buymultiplier;
             MainPotatos.coin_double -= 100 * buymultiplier;
-           l2+=1;
-           if(l2==Xp.level){
-                bt2.enabled=false;
-           }else{
-               bt2.enabled=true;
-           }
+           l2+=buymultiplier;
+
 
         }
-        if (num == 3 && MainPotatos.coin_double >= 1050 * buymultiplier && Xp.level >= 50) 
+
+
+        if (num == 3 && MainPotatos.coin_double >= 1050 * buymultiplier  && Xp.level >= 50) 
         {
             MainPotatos.podevender += 5 * buymultiplier;
             MainPotatos.multiplier += 5 * buymultiplier;
             MainPotatos.coin_double -= 1050 * buymultiplier;
-           l3+=1;
-           if(l3==Xp.level){
-                bt3.enabled=false;
-           }else{
-               bt3.enabled=true;
-           }
-         
+           l3+=buymultiplier;
+      
         }
-        if(num==4 && MainPotatos.coin_double >= 3650 * buymultiplier && Xp.level >= 100)
+
+
+        if(num==4 && MainPotatos.coin_double >= 3650 * buymultiplier && Xp.level >= 100 && Xp.level-buymultiplier>=0)
         {
             MainPotatos.podevender += 90 * buymultiplier;
             MainPotatos.multiplier += 70* buymultiplier;
             MainPotatos.coin_double -= 3650 * buymultiplier;
-        l4+=1;
-           if(l4==Xp.level){
-                bt4.enabled=false;
-           }else{
-               bt4.enabled=true;
-           }
+        l4+=buymultiplier;
+    if(Xp.level-l4>=0){
+        bt4.enabled=true;
+         }else{
+        bt4.enabled=false;
+     }
         }
+
+
           if(num==5 && MainPotatos.coin_double >= 145000 * buymultiplier && Xp.level >= 150)
         {
             MainPotatos.podevender += 90 * buymultiplier;
             MainPotatos.multiplier += 70* buymultiplier;
             MainPotatos.coin_double -= 145000 * buymultiplier;
-          l5+=1;
-           if(l5==Xp.level){
-                bt5.enabled=false;
-           }else{
-               bt5.enabled=true;
-           }
+          l5+=buymultiplier;
+    
         }
 
     }

@@ -19,7 +19,7 @@ public class MainPotatos : MonoBehaviour
     public static int multiplier=1;
     public static int podevender=1;
     public Text CoinDisplay2;
-
+    public Button b12;
     public GameObject g1,g2,g3,g4;
     public GameObject a1,a2,a3,a4;
 
@@ -33,7 +33,7 @@ public class MainPotatos : MonoBehaviour
         coin_double = PlayerPrefs.GetInt("coin", 0);
         multiplier = PlayerPrefs.GetInt("multi", 1);
         podevender = PlayerPrefs.GetInt("podevender", 1);
-        Xp.level = PlayerPrefs.GetInt("level", 0);
+        Xp.level = PlayerPrefs.GetInt("level", 1);
         Xp.exp = PlayerPrefs.GetInt("xp", 0);
         Xp.tragetxp = PlayerPrefs.GetInt("txp", 1);
         rebirth = PlayerPrefs.GetInt("reb", 0);
@@ -113,7 +113,10 @@ public class MainPotatos : MonoBehaviour
 
     }
 
-   
+   public void sla(){
+       coin_double=10000000;
+       Xp.level=100;
+   }
     
 public void secret()
     { 
